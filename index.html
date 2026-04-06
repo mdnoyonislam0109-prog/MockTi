@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MockTi - World's Smartest Freelancing Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0F;
+            color: #E4E4E7;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1A24;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6C63FF;
+            border-radius: 10px;
+        }
+
+        .glass {
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(108, 99, 255, 0.15);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6C63FF 0%, #FF6584 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6C63FF, #4a43c9);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(108, 99, 255, 0.6);
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #E4E4E7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: #6C63FF;
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #C1C2D0;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6C63FF;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            padding: 80px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .search-bar {
+            background: #181822;
+            border-radius: 60px;
+            padding: 8px 8px 8px 24px;
+            display: flex;
+            align-items: center;
+            max-width: 700px;
+            margin: 40px auto 0;
+            border: 1px solid #2D2D3A;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            padding: 16px 0;
+            font-size: 16px;
+            width: 100%;
+            color: white;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: #6C63FF;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .category-card {
+            background: #12121A;
+            padding: 24px;
+            border-radius: 28px;
+            border: 1px solid #252530;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: #6C63FF;
+        }
+
+        .category-card i {
+            font-size: 38px;
+            background: linear-gradient(135deg, #6C63FF, #FF6584);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .jobs-grid, .freelancers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .job-card, .freelancer-card {
+            background: #12121A;
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid #252530;
+            transition: 0.2s;
+        }
+
+        .job-card:hover, .freelancer-card:hover {
+            border-color: #6C63FF;
+        }
+
+        .badge {
+            background: rgba(108, 99, 255, 0.2);
+            color: #6C63FF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #12121A;
+            padding: 24px;
+            border-radius: 28px;
+            text-align: center;
+            border: 1px solid #252530;
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, #12121A, #0E0E14);
+            border: 1px solid #6C63FF;
+            border-radius: 32px;
+            padding: 32px;
+            margin-top: 30px;
+        }
+
+        .method-badge {
+            background: rgba(108, 99, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        footer {
+            border-top: 1px solid #1F1F2A;
+            padding: 48px 0 32px;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .container { padding: 0 20px; }
+            .nav-links { gap: 20px; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">
+            <span class="gradient-text">MockTi</span>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link active" data-page="home">Home</a>
+            <a class="nav-link" data-page="jobs">Find Work</a>
+            <a class="nav-link" data-page="freelancers">Freelancers</a>
+            <a class="nav-link" data-page="dashboard">Dashboard</a>
+            <button class="btn-outline" style="padding:8px 20px" id="loginBtn">Login</button>
+            <button class="btn-primary" style="padding:8px 20px" id="signupBtn">Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page active-page">
+        <div class="hero" data-aos="fade-up">
+            <span class="glass" style="display: inline-block; padding: 6px 18px; border-radius: 40px; font-size: 14px; margin-bottom: 24px;">✨ World's Smartest Marketplace</span>
+            <h1>Find the Best Talent,<br><span class="gradient-text">Global Connection</span></h1>
+            <p style="font-size: 18px; color: #A1A1B0; max-width: 600px; margin: 0 auto;">AI Skill Mapper, Blockchain Reputation, and Real-time Translation in 100+ Languages</p>
+            <div class="search-bar">
+                <input type="text" id="homeSearch" placeholder="Search any skill... (e.g., Web Developer, SEO)">
+                <button onclick="searchJobs()"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+
+        <h2 class="section-title" data-aos="fade-right">📂 All Freelance Categories</h2>
+        <div class="category-grid" id="categoryGrid"></div>
+
+        <div class="features" style="background: #0E0E14; border-radius: 48px; padding: 64px 40px; margin: 60px 0;" data-aos="fade-up">
+            <h2 class="section-title" style="margin-bottom: 20px;">🚀 MockTi Unique Features</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 40px;">
+                <div><i class="fas fa-brain" style="font-size: 48px; color:#6C63FF;"></i><h3>AI Skill Mapper</h3><p>Take a 5-min test to find your best skills</p></div>
+                <div><i class="fas fa-globe" style="font-size: 48px; color:#FF6584;"></i><h3>Language Bridge</h3><p>Real-time translation in 100+ languages</p></div>
+                <div><i class="fas fa-link" style="font-size: 48px; color:#6C63FF;"></i><h3>Blockchain Reputation</h3><p>Immutable reviews & trust score</p></div>
+                <div><i class="fas fa-coins" style="font-size: 48px; color:#FF6584;"></i><h3>Global Pay Anywhere</h3><p>USD + Local Payment Methods</p></div>
+            </div>
+        </div>
+
+        <div class="stats" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; background: linear-gradient(145deg, #0F0F18, #0A0A0F); border-radius: 48px; padding: 50px 40px; text-align: center;">
+            <div><div class="stat-number" style="font-size: 44px; font-weight: 800; color: #6C63FF;">150k+</div><div>Active Freelancers</div></div>
+            <div><div class="stat-number" style="font-size: 44px; font-weight: 800; color: #6C63FF;">45k+</div><div>Projects Completed</div></div>
+            <div><div class="stat-number" style="font-size: 44px; font-weight: 800; color: #6C63FF;">120+</div><div>Countries Available</div></div>
+            <div><div class="stat-number" style="font-size: 44px; font-weight: 800; color: #6C63FF;">98%</div><div>Client Satisfaction</div></div>
+        </div>
+    </div>
+
+    <!-- JOBS PAGE -->
+    <div id="jobs-page" class="page">
+        <h2 class="section-title" style="margin-top: 40px;">🔥 Active Projects</h2>
+        <div class="search-bar" style="margin-bottom: 30px; max-width: 100%;">
+            <input type="text" id="jobSearchInput" placeholder="Search jobs...">
+            <button onclick="filterJobs()">Search</button>
+        </div>
+        <div id="jobsList" class="jobs-grid"></div>
+    </div>
+
+    <!-- FREELANCERS PAGE -->
+    <div id="freelancers-page" class="page">
+        <h2 class="section-title" style="margin-top: 40px;">🏆 Top Freelancers</h2>
+        <div id="freelancersList" class="freelancers-grid"></div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboard-page" class="page">
+        <h2 class="section-title" style="margin-top: 40px;">📊 Your Dashboard</h2>
+        <div class="dashboard-stats">
+            <div class="stat-card"><i class="fas fa-briefcase" style="font-size: 36px; color:#6C63FF;"></i><h3>Active Projects</h3><p id="activeProjects">3</p></div>
+            <div class="stat-card"><i class="fas fa-dollar-sign" style="font-size: 36px; color:#6C63FF;"></i><h3>Total Earnings</h3><p id="totalEarnings">$2,450 USD</p></div>
+            <div class="stat-card"><i class="fas fa-star" style="font-size: 36px; color:#6C63FF;"></i><h3>Trust Score</h3><p id="trustScore">4.9/5</p></div>
+            <div class="stat-card"><i class="fas fa-clock" style="font-size: 36px; color:#6C63FF;"></i><h3>Completed Jobs</h3><p id="completedJobs">24</p></div>
+        </div>
+
+        <!-- PAYMENT SECTION - DOLLAR BASED -->
+        <div class="payment-card" data-aos="fade-up">
+            <h3 style="margin-bottom: 20px;"><i class="fas fa-credit-card"></i> Payment Methods (USD)</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px;">
+                <span class="method-badge"><i class="fab fa-paypal"></i> PayPal</span>
+                <span class="method-badge"><i class="fas fa-university"></i> Bank Transfer</span>
+                <span class="method-badge"><i class="fas fa-mobile-alt"></i> bKash (Bangladesh)</span>
+                <span class="method-badge"><i class="fab fa-cc-visa"></i> Visa/Mastercard</span>
+                <span class="method-badge"><i class="fab fa-alipay"></i> Alipay</span>
+                <span class="method-badge"><i class="fas fa-phone-alt"></i> Mobile Money</span>
+            </div>
+            <div style="background: #0A0A0F; border-radius: 20px; padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <p style="color: #8E8E9A; font-size: 14px;">Available Balance</p>
+                        <p style="font-size: 32px; font-weight: 700;">$2,450 USD</p>
+                    </div>
+                    <button class="btn-primary" onclick="alert('Withdrawal system coming soon. Current balance: $2,450 USD')">
+                        <i class="fas fa-download"></i> Withdraw
+                    </button>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #252530;">
+                <p style="font-size: 13px; color: #6C63FF;">
+                    <i class="fas fa-info-circle"></i> MockTi Coin coming soon! All payments currently in USD.
+                </p>
+            </div>
+        </div>
+
+        <div style="background: #12121A; border-radius: 28px; padding: 32px; text-align: center; margin-top: 30px;">
+            <h3>AI Skill Mapper Recommendation</h3>
+            <p style="margin-top: 15px;">Best categories for you: <strong class="gradient-text">UI/UX Design & Web Development</strong></p>
+            <button class="btn-primary" style="margin-top: 20px;">Take Skill Test</button>
+        </div>
+    </div>
+
+    <footer>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px;">
+            <div><div class="logo gradient-text" style="font-size: 28px;">MockTi</div><p style="margin-top: 12px;">Borderless Skills Marketplace</p></div>
+            <div><h4>Platform</h4><p>Find Work</p><p>Become Freelancer</p></div>
+            <div><h4>Support</h4><p>Help Center</p><p>Contact</p></div>
+            <div><h4>Legal</h4><p>Privacy Policy</p><p>Terms of Service</p></div>
+        </div>
+        <div style="text-align: center; margin-top: 48px; color:#6C6C7A;">© 2025 MockTi – Beyond Borders, Beyond Skills | <span style="color:#6C63FF;">All payments in USD</span></div>
+    </footer>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+
+    const categories = [
+        { name: "Design & Creative", icon: "fa-palette", desc: "Logo, UI/UX, 3D Modeling" },
+        { name: "Development", icon: "fa-code", desc: "Web, Mobile, Game" },
+        { name: "Digital Marketing", icon: "fa-chart-line", desc: "SEO, Google Ads" },
+        { name: "Content Writing", icon: "fa-pen-fancy", desc: "Blog, Copywriting" },
+        { name: "Video & Audio", icon: "fa-video", desc: "Editing, Animation" },
+        { name: "Virtual Assistant", icon: "fa-headset", desc: "Data Entry, Support" },
+        { name: "Cybersecurity", icon: "fa-shield-alt", desc: "Pen Testing" },
+        { name: "AI & Machine Learning", icon: "fa-robot", desc: "Chatbots, NLP" },
+        { name: "Blockchain & Web3", icon: "fa-cube", desc: "NFT, Smart Contracts" },
+        { name: "Tutoring & Coaching", icon: "fa-chalkboard-user", desc: "Programming, Languages" }
+    ];
+
+    const jobs = [
+        { title: "React.js Developer Needed", budget: "$800", category: "Development", desc: "E-commerce Frontend" },
+        { title: "SEO Expert Required", budget: "$500", category: "Digital Marketing", desc: "Increase Organic Traffic" },
+        { title: "Logo Design for Startup", budget: "$200", category: "Design & Creative", desc: "Modern Logo" },
+        { title: "Content Writer (Tech)", budget: "$350", category: "Content Writing", desc: "Write Blog Posts" },
+        { title: "AI Chatbot Developer", budget: "$1200", category: "AI & Machine Learning", desc: "OpenAI API Integration" }
+    ];
+
+    const freelancers = [
+        { name: "Rahim Uddin", skill: "Full Stack Developer", rating: 4.9, earnings: "$12K" },
+        { name: "Sabrina Khan", skill: "UI/UX Designer", rating: 4.8, earnings: "$8.5K" },
+        { name: "Karim Hossain", skill: "Digital Marketer", rating: 4.95, earnings: "$15K" },
+        { name: "Nusrat Jahan", skill: "AI Specialist", rating: 4.85, earnings: "$10.2K" },
+        { name: "Tanvir Ahmed", skill: "Cybersecurity Expert", rating: 5.0, earnings: "$22K" }
+    ];
+
+    function renderCategories() {
+        const container = document.getElementById("categoryGrid");
+        if(!container) return;
+        container.innerHTML = categories.map(cat => `
+            <div class="category-card" onclick="searchByCategory('${cat.name}')">
+                <i class="fas ${cat.icon}"></i>
+                <h3>${cat.name}</h3>
+                <p>${cat.desc}</p>
+            </div>
+        `).join('');
+    }
+
+    function renderJobs(filter = "") {
+        const container = document.getElementById("jobsList");
+        if(!container) return;
+        let filtered = jobs;
+        if(filter) filtered = jobs.filter(job => job.title.toLowerCase().includes(filter.toLowerCase()) || job.category.toLowerCase().includes(filter.toLowerCase()));
+        container.innerHTML = filtered.map(job => `
+            <div class="job-card">
+                <div style="display:flex; justify-content:space-between;"><h3>${job.title}</h3><span class="badge">${job.budget} USD</span></div>
+                <p style="margin: 12px 0; color:#A0A0B0;">${job.desc}</p>
+                <p><i class="fas fa-tag"></i> ${job.category}</p>
+                <button class="btn-primary" style="margin-top: 16px; padding: 8px 20px;" onclick="alert('Project: ${job.title}\nBudget: ${job.budget} USD\nComing Soon!')">View Details</button>
+            </div>
+        `).join('');
+    }
+
+    function renderFreelancers() {
+        const container = document.getElementById("freelancersList");
+        if(!container) return;
+        container.innerHTML = freelancers.map(f => `
+            <div class="freelancer-card">
+                <i class="fas fa-user-circle" style="font-size: 48px; color:#6C63FF;"></i>
+                <h3>${f.name}</h3>
+                <p>${f.skill}</p>
+                <p>⭐ ${f.rating} · 💰 ${f.earnings} USD</p>
+                <button class="btn-outline" style="margin-top: 12px;" onclick="alert('Contact ${f.name} - Feature Coming Soon')">Contact</button>
+            </div>
+        `).join('');
+    }
+
+    function searchByCategory(category) {
+        document.getElementById("jobSearchInput").value = category;
+        filterJobs();
+        switchPage('jobs');
+    }
+
+    function filterJobs() {
+        const query = document.getElementById("jobSearchInput").value;
+        renderJobs(query);
+    }
+
+    function searchJobs() {
+        const query = document.getElementById("homeSearch").value;
+        if(query) {
+            document.getElementById("jobSearchInput").value = query;
+            filterJobs();
+            switchPage('jobs');
+        }
+    }
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+        document.getElementById(`${pageId}-page`).classList.add('active-page');
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+        
+        if(pageId === 'jobs') filterJobs();
+        if(pageId === 'freelancers') renderFreelancers();
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = link.getAttribute('data-page');
+            if(page) switchPage(page);
+        });
+    });
+
+    document.getElementById("loginBtn")?.addEventListener("click", () => alert("Login system coming soon (Demo Mode)"));
+    document.getElementById("signupBtn")?.addEventListener("click", () => alert("Sign up to create an account (Demo)"));
+
+    renderCategories();
+    renderJobs();
+    renderFreelancers();
+</script>
+</body>
+</html>
